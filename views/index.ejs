@@ -1,0 +1,54 @@
+<%- include('layout/header') %>
+
+<div class="container" style="margin-top: 20px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <% if (message) { %>
+             <div class="alert alert-dismissible fade show alert-<%= message.type  %>" role="alert">
+                <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                <strong><%= message.message %></strong>
+            </div>
+            <% } %>
+            <div class="table-responsive">
+                <!--Ketika data users tidak sama dengan tidak ada/0, maka akan menayangkan table-->
+                <% if (users != '') { %>
+                    <table class="table table-striped text-center my-3">
+                        <thead>
+                            <tr class="table-dark">
+                                <th>ID</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>E-mail</th>
+                                <th>Phone</th>
+                                <th>action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--Untuk menampilkan data dari database dengan perulangan for-->
+                            <% users.forEach((row, index) => { %>
+                                <tr class="align-middle">
+                                    <td><%= index  %></td>
+                                    <td><img src="<%= row.image  %>" width="50" class="img-thumbnail"></td>
+                                    <td><%= row.name %></td>
+                                    <td><%= row.email  %></td>
+                                    <td><%= row.phone %></td>
+                                    <td>
+                                        <a href="/edit/<%= row._id %>" class="text-success"><i class="fas fa-edit mx-1 fa-lg"></i>
+                                        </a>
+                                        <a href="/delete/<%= row._id %>" class="text-success"><i class="fas fa-trash mx-1 fa-lg"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                    <!--Namun jika dalam data users tidak terdapat data maka akan menayangkan text jika users tidak ditemukan-->
+                <% } else { %>
+                    <h1 class="text-center text-secondary mt-5">No users found in the database!</h1>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('layout/footer') %>
